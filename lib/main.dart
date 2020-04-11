@@ -1,3 +1,4 @@
+import 'package:calculadoraimc/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
   String _info_text = 'Informe seus dados.';
   TextEditingController pesoControler = TextEditingController();
   TextEditingController alturaControler = TextEditingController();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _reset() {
     setState(() {
@@ -25,30 +27,11 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
     });
   }
 
-  void calculaIMC() {
+  void _onCalcularPressed() {
     double peso = double.parse(pesoControler.text);
-    double altura = double.parse(alturaControler.text) / 100;
-    double imc = peso / (altura * altura);
-    print(imc);
-    if (imc < 18.6) {
-      _info_text =
-          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Abaixo do peso';
-    } else if (18.6 <= imc && imc <= 24.9) {
-      _info_text = 'Seu imc é de ${imc.toStringAsPrecision(4)} -> Peso normal';
-    } else if (24.9 <= imc && imc <= 29.9) {
-      _info_text = 'Seu imc é de ${imc.toStringAsPrecision(4)} -> Sobrepeso';
-    } else if (29.9 <= imc && imc <= 34.9) {
-      _info_text =
-          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Obesidade Grau I';
-    } else if (34.9 <= imc && imc <= 39.9) {
-      _info_text =
-          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Obesidade Grau II';
-    } else if (40 <= imc) {
-      _info_text =
-          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Obesidade Grau III';
-    }
+    double altura = double.parse(alturaControler.text);
     setState(() {
-      _info_text = _info_text;
+      _info_text = calculaIMC(peso, altura);
     });
   }
 
@@ -99,7 +82,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                     height: 50,
                     child: RaisedButton(
                       color: Colors.green,
-                      onPressed: calculaIMC,
+                      onPressed: _onCalcularPressed,
                       child: Text(
                         'Calcular',
                         style: TextStyle(color: Colors.white, fontSize: 25),
