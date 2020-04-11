@@ -47,55 +47,73 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
           ],
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20, 1, 20, 1),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Icon(
-                Icons.person_outline,
-                size: 120,
-                color: Colors.green,
-              ),
-              TextField(
-                controller: pesoControler,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Peso (KG)',
-                  labelStyle: TextStyle(color: Colors.green),
-                ),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green),
-              ),
-              TextField(
-                controller: alturaControler,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Altura (CM)',
-                  labelStyle: TextStyle(color: Colors.green),
-                ),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: Container(
-                    height: 50,
-                    child: RaisedButton(
-                      color: Colors.green,
-                      onPressed: _onCalcularPressed,
-                      child: Text(
-                        'Calcular',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
+            padding: EdgeInsets.fromLTRB(20, 1, 20, 1),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Icon(
+                    Icons.person_outline,
+                    size: 120,
+                    color: Colors.green,
+                  ),
+                  TextFormField(
+                    controller: pesoControler,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Peso (KG)',
+                      labelStyle: TextStyle(color: Colors.green),
                     ),
-                  )),
-              Text(
-                this._info_text,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.green, fontSize: 25),
-              )
-            ],
-          ),
-        ));
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.green),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Insira seu peso";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: alturaControler,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Altura (CM)',
+                      labelStyle: TextStyle(color: Colors.green),
+                    ),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.green),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Insira sua altura";
+                      }
+                      return null;
+                    },
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 20),
+                      child: Container(
+                        height: 50,
+                        child: RaisedButton(
+                          color: Colors.green,
+                          onPressed: (){
+                            if (_formKey.currentState.validate()){
+                              _onCalcularPressed();
+                            }
+                          },
+                          child: Text(
+                            'Calcular',
+                            style: TextStyle(color: Colors.white, fontSize: 25),
+                          ),
+                        ),
+                      )),
+                  Text(
+                    this._info_text,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.green, fontSize: 25),
+                  )
+                ],
+              ),
+            )));
   }
 }
