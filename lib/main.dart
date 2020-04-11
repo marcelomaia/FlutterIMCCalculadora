@@ -1,5 +1,4 @@
 import 'package:calculadoraimc/helper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +16,8 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
   String _info_text = 'Informe seus dados.';
   TextEditingController pesoControler = TextEditingController();
   TextEditingController alturaControler = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _reset() {
     setState(() {
@@ -28,8 +28,8 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
   }
 
   void _onCalcularPressed() {
-    double peso = double.parse(pesoControler.text);
-    double altura = double.parse(alturaControler.text);
+    var peso = double.parse(pesoControler.text);
+    var altura = double.parse(alturaControler.text);
     setState(() {
       _info_text = calculaIMC(peso, altura);
     });
@@ -43,7 +43,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
           centerTitle: true,
           backgroundColor: Colors.green,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.refresh), onPressed: this._reset)
+            IconButton(icon: Icon(Icons.refresh), onPressed: _reset)
           ],
         ),
         body: SingleChildScrollView(
@@ -69,7 +69,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                     style: TextStyle(color: Colors.green),
                     validator: (value) {
                       if (value.isEmpty) {
-                        return "Insira seu peso";
+                        return 'Insira seu peso';
                       }
                       return null;
                     },
@@ -85,7 +85,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                     style: TextStyle(color: Colors.green),
                     validator: (value) {
                       if (value.isEmpty) {
-                        return "Insira sua altura";
+                        return 'Insira sua altura';
                       }
                       return null;
                     },
@@ -96,8 +96,8 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                         height: 50,
                         child: RaisedButton(
                           color: Colors.green,
-                          onPressed: (){
-                            if (_formKey.currentState.validate()){
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
                               _onCalcularPressed();
                             }
                           },
@@ -108,7 +108,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                         ),
                       )),
                   Text(
-                    this._info_text,
+                    _info_text,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.green, fontSize: 25),
                   )
