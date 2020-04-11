@@ -13,6 +13,45 @@ class CalculadoraIMC extends StatefulWidget {
 }
 
 class _CalculadoraIMCState extends State<CalculadoraIMC> {
+  String _info_text = 'Informe seus dados.';
+  TextEditingController pesoControler = TextEditingController();
+  TextEditingController alturaControler = TextEditingController();
+
+  void _reset() {
+    setState(() {
+      pesoControler.clear();
+      alturaControler.clear();
+      _info_text = 'Informe seus dados.';
+    });
+  }
+
+  void calculaIMC() {
+    double peso = double.parse(pesoControler.text);
+    double altura = double.parse(alturaControler.text) / 100;
+    double imc = peso / (altura * altura);
+    print(imc);
+    if (imc < 18.6) {
+      _info_text =
+          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Abaixo do peso';
+    } else if (18.6 <= imc && imc <= 24.9) {
+      _info_text = 'Seu imc é de ${imc.toStringAsPrecision(4)} -> Peso normal';
+    } else if (24.9 <= imc && imc <= 29.9) {
+      _info_text = 'Seu imc é de ${imc.toStringAsPrecision(4)} -> Sobrepeso';
+    } else if (29.9 <= imc && imc <= 34.9) {
+      _info_text =
+          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Obesidade Grau I';
+    } else if (34.9 <= imc && imc <= 39.9) {
+      _info_text =
+          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Obesidade Grau II';
+    } else if (40 <= imc) {
+      _info_text =
+          'Seu imc é de ${imc.toStringAsPrecision(4)} -> Obesidade Grau III';
+    }
+    setState(() {
+      _info_text = _info_text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +60,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
           centerTitle: true,
           backgroundColor: Colors.green,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.refresh), onPressed: () {})
+            IconButton(icon: Icon(Icons.refresh), onPressed: this._reset)
           ],
         ),
         body: SingleChildScrollView(
@@ -35,18 +74,20 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                 color: Colors.green,
               ),
               TextField(
+                controller: pesoControler,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'PesoKG',
+                  labelText: 'Peso (KG)',
                   labelStyle: TextStyle(color: Colors.green),
                 ),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.green),
               ),
               TextField(
+                controller: alturaControler,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Altura',
+                  labelText: 'Altura (CM)',
                   labelStyle: TextStyle(color: Colors.green),
                 ),
                 textAlign: TextAlign.center,
@@ -58,7 +99,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                     height: 50,
                     child: RaisedButton(
                       color: Colors.green,
-                      onPressed: () {},
+                      onPressed: calculaIMC,
                       child: Text(
                         'Calcular',
                         style: TextStyle(color: Colors.white, fontSize: 25),
@@ -66,7 +107,7 @@ class _CalculadoraIMCState extends State<CalculadoraIMC> {
                     ),
                   )),
               Text(
-                'Info',
+                this._info_text,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.green, fontSize: 25),
               )
