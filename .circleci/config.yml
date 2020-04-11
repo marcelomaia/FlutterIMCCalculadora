@@ -11,6 +11,10 @@ jobs:
       - checkout
 
       - run:
+          name: Atualizando dependencias
+          command: flutter pub get
+
+      - run:
           name: Run lint
           command: dartanalyzer --options analysis_options.yaml .
 
