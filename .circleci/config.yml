@@ -11,8 +11,8 @@ jobs:
       - checkout
 
       - run:
-        name: Run lint
-        command: dartanalyzer --options analysis_options.yaml .
+          name: Run lint
+          command: dartanalyzer --options analysis_options.yaml .
 
       - run:
           name: Run the application tests
