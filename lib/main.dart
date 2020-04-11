@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
 //    theme: ThemeData(colorScheme: Colors.red),
+      title: 'Calculadora IMC',
+      debugShowCheckedModeBanner: false,
       home: CalculadoraIMC()));
 }
 
