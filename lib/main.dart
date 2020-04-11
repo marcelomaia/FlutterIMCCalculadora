@@ -1,4 +1,4 @@
-import 'package:calculadoraimc/helper.dart';
+import 'helper.dart';
 import 'package:flutter/material.dart';
 
 void main() {
